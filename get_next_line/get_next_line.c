@@ -6,7 +6,7 @@
 /*   By: thardy <thardy@student.42adel.org.au>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 18:43:06 by thardy            #+#    #+#             */
-/*   Updated: 2022/01/18 14:40:43 by thardy           ###   ########.fr       */
+/*   Updated: 2022/02/10 11:50:45 by thardy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,22 @@
 
 char	*get_next_line(int fd)
 {
-	static char	*str;
-	int			i;
-	char 		*buf;
-	char		*tmp;
-	
-	i = 0;
-    buf = malloc(BUFFER_SIZE + 1);
-    if (!buf)
-        return (0);
-	while (i < BUFFER_SIZE)
+	static char	buf[BUFFER_SIZE + 1];
+	char		*line;
+	int			read_bytes;
+
+	line = 0;
+	read_bytes = 1;
+	while (!ft_strchr(buf, '\n') && read_bytes > 0)
 	{
-    	read(fd, buf + i, 1);
-		if (buf[i] == '\n' || i + 1 == BUFFER_SIZE)
-		{
-			if (!str)
-			{
-				str = malloc(BUFFER_SIZE + 1);
-				ft_strlcpy(str, buf, ft_strlen(buf));
-			}
-			else
-			{
-				tmp = str;
-				str = malloc(ft_strlen(tmp) + i + 1);
-				str[ft_strlen(tmp) + i] = 0;
-				ft_strlcpy(str, tmp, ft_strlen(tmp));
-				ft_strlcpy(str + ft_strlen(tmp) + 1, buf, ft_strlen(buf));
-				free(tmp);
-				printf("str = %s\n", str);
-			}
-			if (str[ft_strlen(str)] == '\n')
-					return (str);
-		}
-		i++;
-		// printf("i = %i, buf = %s\n", i, buf);			  // TESTING
+		read_bytes = read(fd, buf, BUFFER_SIZE);
+		if (read_bytes > 0)
+			buf[read_bytes] = 0;
+				printf("buf = %s\n", buf);
+		line = get_line(buf, line);
+				printf("line: %s", line);
 	}
-    return (0);
+	return (line);
 }
 
 int	main(void)
@@ -62,10 +42,10 @@ int	main(void)
     fp = fopen("lorem-ipsum.txt", "r");
 	fd = fileno(fp);
     printf("fd: %d\n\n", fd);
-	while (iter < 1)
+	while (iter < 8)
     {
-		printf("GNL RETURN: %s", get_next_line(fd));
-		printf("\n\n\n");
+		if (printf("%i %s\n", iter, get_next_line(fd)) == 1)
+			break;
 		iter++;
 	}
 }
