@@ -6,7 +6,7 @@
 /*   By: thardy <thardy@student.42adel.org.au>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 18:43:06 by thardy            #+#    #+#             */
-/*   Updated: 2022/02/11 15:45:25 by thardy           ###   ########.fr       */
+/*   Updated: 2022/02/14 10:27:27 by thardy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*fill_remainder(int fd, char *remainder)
 	buf = malloc(BUFFER_SIZE + 1);
 	if (!buf)
 		return (NULL);
-	while (!ft_strchr(remainder, '\n') && read_bytes != 0)
+	while (!ft_strchr_mod(remainder, '\n') && read_bytes != 0)
 	{
 		read_bytes = read(fd, buf, BUFFER_SIZE);
 		if (read_bytes == -1)
@@ -30,7 +30,7 @@ char	*fill_remainder(int fd, char *remainder)
 			return (NULL);
 		}
 		buf[read_bytes] = 0;
-		remainder = ft_strjoin(remainder, buf);
+		remainder = ft_strjoin_mod(remainder, buf);
 	}
 	free(buf);
 	return (remainder);
@@ -104,26 +104,3 @@ char	*get_next_line(int fd)
 	remainder = new_remainder(remainder);
 	return (line);
 }
-/*
-int	main(void)
-{
-    FILE	*fp;
-    int		fd;
-	int		iter;
-	// char	buf[] = "aasdjkghaskjdhbvjhdgafnmv,\n asdkasdgjhdfskaljgmndv.";
-
-	iter = 0;
-    fp = fopen("lorem-ipsum.txt", "r");
-	fd = fileno(fp);
-    printf("fd: %d\n\n", fd);
-	// printf("cut_buf: %s\n", cut_buf(buf, 5));
-	// printf("buf: %s\n", buf);
-	while (iter < 8)
-    {
-		if (printf("%i %s\n", iter, get_next_line(fd)) == 1)
-			break;
-		iter++;
-	}
-	close(fd);
-}
-*/

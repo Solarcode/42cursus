@@ -6,7 +6,7 @@
 /*   By: thardy <thardy@student.42adel.org.au>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 18:59:48 by thardy            #+#    #+#             */
-/*   Updated: 2022/02/11 15:45:15 by thardy           ###   ########.fr       */
+/*   Updated: 2022/02/14 10:23:38 by thardy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-char	*ft_strchr(const char *str, int c)
+char	*ft_strchr_mod(const char *str, int c)
 {
 	size_t	i;
 
@@ -74,7 +74,7 @@ void	*ft_calloc(size_t nitems, size_t size)
 	return (p);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin_mod(char const *s1, char const *s2)
 {
 	char	*ret;
 	size_t	i;
